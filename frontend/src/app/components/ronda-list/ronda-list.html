@@ -1,0 +1,112 @@
+<main class="board-shell">
+  <nav class="topbar" aria-label="Principal">
+    <a class="brand" routerLink="/" aria-label="Volver a Ronda">
+      <span class="brand-mark">R</span>
+      <span>Ronda</span>
+    </a>
+    <a class="create-link" routerLink="/crear-ronda">Crear ronda</a>
+  </nav>
+
+  <header class="board-header">
+    <p class="eyebrow">Tablon de rondas</p>
+    <h1>Unete a una ronda activa.</h1>
+    <p>
+      Revisa quien baja, a que hora sale y que pedidos hay ya apuntados.
+      Anade el tuyo directamente desde la tarjeta.
+    </p>
+  </header>
+
+  @if (errorMessage()) {
+    <p class="error-message">{{ errorMessage() }}</p>
+  }
+
+  @if (isLoading()) {
+    <section class="empty-state">
+      <strong>Cargando rondas...</strong>
+      <p>Estamos consultando el backend.</p>
+    </section>
+  } @else if (!rondas().length) {
+    <section class="empty-state">
+      <strong>No hay rondas activas</strong>
+      <p>Publica la primera ronda para que tus companeros puedan apuntarse.</p>
+      <a routerLink="/crear-ronda">Crear una ronda</a>
+    </section>
+  } @else {
+    <section class="ronda-grid" aria-label="Rondas activas">
+      @for (ronda of rondas(); track ronda.id) {
+        <article class="ronda-card">
+          <div class="card-top">
+            <div>
+              <p class="card-kicker">Organiza {{ ronda.creador }}</p>
+              <h2>{{ ronda.lugar }}</h2>
+            </div>
+            <span class="time-badge">{{ ronda.horaSalida }}</span>
+          </div>
+
+          <p class="description">{{ ronda.descripcion }}</p>
+
+          <div class="contact-row">
+            <span>Bizum</span>
+            <strong>{{ ronda.telefonoBizum }}</strong>
+          </div>
+
+          <section class="orders" aria-label="Pedidos apuntados">
+            <div class="orders-title">
+              <strong>Pedidos</strong>
+              <span>{{ ronda.pedidos?.length || 0 }}</span>
+            </div>
+
+            @if (ronda.pedidos?.length) {
+              <ul>
+                @for (pedido of ronda.pedidos; track pedido.id) {
+                  <li>
+                    <span>{{ pedido.participante }}</span>
+                    <strong>{{ pedido.producto }}</strong>
+                  </li>
+                }
+              </ul>
+            } @else {
+              <p class="no-orders">Todavia no hay pedidos. Puedes ser el primero.</p>
+            }
+          </section>
+
+          <button class="join-toggle" type="button" (click)="toggleForm(ronda.id!)">
+            {{ activeFormId() === ronda.id ? 'Cerrar' : 'Apuntarme' }}
+          </button>
+
+          <button class="close-round" type="button" (click)="closeRonda(ronda)" [disabled]="closingId() === ronda.id">
+            {{ closingId() === ronda.id ? 'Cerrando...' : 'Cerrar Ronda' }}
+          </button>
+
+          @if (activeFormId() === ronda.id) {
+            <form class="join-form" (ngSubmit)="submitPedido(ronda)">
+              <label>
+                <span>Nombre</span>
+                <input
+                  type="text"
+                  name="participante-{{ ronda.id }}"
+                  [(ngModel)]="drafts[ronda.id!].participante"
+                  placeholder="Tu nombre"
+                />
+              </label>
+
+              <label>
+                <span>Pedido</span>
+                <input
+                  type="text"
+                  name="producto-{{ ronda.id }}"
+                  [(ngModel)]="drafts[ronda.id!].producto"
+                  placeholder="Cafe con leche"
+                />
+              </label>
+
+              <button class="submit-order" type="submit" [disabled]="savingId() === ronda.id">
+                {{ savingId() === ronda.id ? 'Apuntando...' : '¡Me apunto!' }}
+              </button>
+            </form>
+          }
+        </article>
+      }
+    </section>
+  }
+</main>

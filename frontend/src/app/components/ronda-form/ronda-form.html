@@ -1,0 +1,81 @@
+<main class="form-shell">
+  <nav class="topbar" aria-label="Principal">
+    <a class="brand" routerLink="/" aria-label="Volver a Ronda">
+      <span class="brand-mark">R</span>
+      <span>Ronda</span>
+    </a>
+    <a class="back-link" routerLink="/">Volver al inicio</a>
+  </nav>
+
+  <section class="form-layout">
+    <div class="form-copy">
+      <p class="eyebrow">Nueva ronda</p>
+      <h1>Publica una ronda para tu equipo.</h1>
+      <p class="lead">
+        Indica donde vas, cuando sales y el telefono para coordinar el Bizum.
+        Tus companeros podran unirse con sus pedidos.
+      </p>
+
+      <div class="summary-panel" aria-label="Resumen de datos necesarios">
+        <div>
+          <span>01</span>
+          <strong>Lugar y hora claros</strong>
+        </div>
+        <div>
+          <span>02</span>
+          <strong>Contacto para Bizum</strong>
+        </div>
+        <div>
+          <span>03</span>
+          <strong>Descripcion breve</strong>
+        </div>
+      </div>
+    </div>
+
+    <form class="ronda-card" [formGroup]="rondaForm" (ngSubmit)="submit()">
+      <div class="card-header">
+        <p class="eyebrow">Formulario</p>
+        <h2>Datos de la ronda</h2>
+      </div>
+
+      <label>
+        <span>Creador</span>
+        <input type="text" formControlName="creador" placeholder="Maria Gonzalez" autocomplete="name" />
+      </label>
+
+      <label>
+        <span>Lugar</span>
+        <input type="text" formControlName="lugar" placeholder="Cafeteria Genesis" />
+      </label>
+
+      <div class="field-grid">
+        <label>
+          <span>Hora de salida</span>
+          <input type="time" formControlName="horaSalida" />
+        </label>
+
+        <label>
+          <span>Telefono Bizum</span>
+          <input type="tel" formControlName="telefonoBizum" placeholder="600123123" autocomplete="tel" />
+        </label>
+      </div>
+
+      <label>
+        <span>Descripcion</span>
+        <textarea
+          formControlName="descripcion"
+          rows="4"
+          placeholder="Bajo a por cafes y algo de desayuno. Cierro pedidos cinco minutos antes."
+        ></textarea>
+      </label>
+
+      @if (errorMessage) {
+        <p class="error-message">{{ errorMessage }}</p>
+      }
+
+      <button class="submit-button" type="submit" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Publicando...' : 'Publicar Ronda' }}
+      </button>
+    </form>
+  </section>
+</main>

@@ -1,0 +1,91 @@
+<main class="home-shell">
+  <section class="hero">
+    <nav class="topbar" aria-label="Principal">
+      <a class="brand" href="/" aria-label="Ronda inicio">
+        <span class="brand-mark">R</span>
+        <span>Ronda</span>
+      </a>
+
+      <div class="status-pill">
+        <span class="status-dot"></span>
+        Pedidos de oficina
+      </div>
+    </nav>
+
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Cafes, desayunos y menús en equipo</p>
+        <h1>Organiza la proxima ronda sin chats infinitos.</h1>
+        <p class="lead">
+          Ronda centraliza quien baja, a que hora sale y que quiere cada
+          companero. Los pedidos quedan ordenados y los pagos por Bizum se
+          coordinan sin friccion.
+        </p>
+
+        <div class="hero-actions" aria-label="Acciones principales">
+          <a class="btn btn-primary" routerLink="/crear-ronda">Crear una ronda</a>
+          <a class="btn btn-secondary" routerLink="/unirse">Unirse a una ronda</a>
+        </div>
+      </div>
+
+      <aside class="order-panel" aria-label="Ejemplo de ronda activa">
+        <div class="panel-header">
+          <div>
+            <p class="panel-label">Ronda activa</p>
+            <h2>Restaurante La Xinesa</h2>
+          </div>
+          <span class="time-badge">Sale 14:00</span>
+        </div>
+
+        <div class="owner-card">
+          <span class="avatar">MG</span>
+          <div>
+            <strong>Maria González</strong>
+            <p>Teléfono disponible para Bizum</p>
+          </div>
+        </div>
+
+        <div class="order-list">
+          <article>
+            <span class="item-count">2x</span>
+            <div>
+              <strong>Menú infantil</strong>
+              <p>Ana y David</p>
+            </div>
+          </article>
+          <article>
+            <span class="item-count">1x</span>
+            <div>
+              <strong>Rollito primavera</strong>
+              <p>Luis</p>
+            </div>
+          </article>
+          <article>
+            <span class="item-count">1x</span>
+            <div>
+              <strong>Pollo agridulce</strong>
+              <p>Nerea</p>
+            </div>
+          </article>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="how-it-works" aria-labelledby="how-title">
+    <div>
+      <p class="section-kicker">Como funciona</p>
+      <h2 id="how-title">Una ronda clara desde el primer pedido.</h2>
+    </div>
+
+    <div class="steps">
+      @for (highlight of highlights; track highlight.value) {
+        <article>
+          <span>{{ highlight.value }}</span>
+          <h3>{{ highlight.title }}</h3>
+          <p>{{ highlight.text }}</p>
+        </article>
+      }
+    </div>
+  </section>
+</main>
