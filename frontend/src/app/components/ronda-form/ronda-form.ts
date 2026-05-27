@@ -35,7 +35,7 @@ export class RondaForm {
     this.errorMessage = '';
 
     this.rondaService.createRonda(this.rondaForm.getRawValue()).subscribe({
-      next: () => this.router.navigateByUrl('/'),
+      next: () => this.router.navigateByUrl('/unirse'),
       error: () => {
         this.isSubmitting = false;
         this.errorMessage = 'No se pudo publicar la ronda. Revisa el backend e intentalo de nuevo.';

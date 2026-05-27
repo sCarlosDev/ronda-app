@@ -1,7 +1,7 @@
 <main class="board-shell">
   <nav class="topbar" aria-label="Principal">
     <a class="brand" routerLink="/" aria-label="Volver a Ronda">
-      <span class="brand-mark">R</span>
+      <img class="brand-mark" src="logo-mark.svg" alt="" width="40" height="40" />
       <span>Ronda</span>
     </a>
     <a class="create-link" routerLink="/crear-ronda">Crear ronda</a>
@@ -32,8 +32,52 @@
       <a routerLink="/crear-ronda">Crear una ronda</a>
     </section>
   } @else {
+    <section class="filters" aria-label="Filtros y orden">
+      <label class="filter-search">
+        <span>Buscar</span>
+        <input
+          type="search"
+          name="search"
+          [ngModel]="searchTerm()"
+          (ngModelChange)="onSearchChange($event)"
+          placeholder="Lugar, creador o descripcion"
+          autocomplete="off"
+        />
+      </label>
+
+      <label class="filter-sort">
+        <span>Ordenar por</span>
+        <select
+          name="sort"
+          [ngModel]="sortMode()"
+          (ngModelChange)="onSortChange($event)"
+        >
+          <option value="recent">Mas recientes</option>
+          <option value="time">Hora de salida</option>
+          <option value="most-orders">Mas pedidos</option>
+        </select>
+      </label>
+
+      @if (searchTerm() || sortMode() !== 'recent') {
+        <button type="button" class="filter-clear" (click)="clearFilters()">
+          Limpiar filtros
+        </button>
+      }
+
+      <p class="filter-summary">
+        {{ filteredRondas().length }} {{ filteredRondas().length === 1 ? 'ronda' : 'rondas' }}
+      </p>
+    </section>
+
+    @if (!filteredRondas().length) {
+      <section class="empty-state">
+        <strong>Sin resultados</strong>
+        <p>Ninguna ronda coincide con tu busqueda. Prueba con otros terminos o limpia los filtros.</p>
+        <button type="button" (click)="clearFilters()">Limpiar filtros</button>
+      </section>
+    } @else {
     <section class="ronda-grid" aria-label="Rondas activas">
-      @for (ronda of rondas(); track ronda.id) {
+      @for (ronda of pagedRondas(); track ronda.id) {
         <article class="ronda-card">
           <div class="card-top">
             <div>
@@ -108,5 +152,28 @@
         </article>
       }
     </section>
+
+    @if (totalPages() > 1) {
+      <nav class="pagination" aria-label="Paginacion">
+        <button
+          type="button"
+          class="page-btn"
+          (click)="goToPage(safePage() - 1)"
+          [disabled]="safePage() === 1"
+        >
+          ← Anterior
+        </button>
+        <span class="page-indicator">Pagina {{ safePage() }} de {{ totalPages() }}</span>
+        <button
+          type="button"
+          class="page-btn"
+          (click)="goToPage(safePage() + 1)"
+          [disabled]="safePage() === totalPages()"
+        >
+          Siguiente →
+        </button>
+      </nav>
+    }
+    }
   }
 </main>

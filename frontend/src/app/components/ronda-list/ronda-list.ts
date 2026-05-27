@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Ronda, RondaDto } from '../../services/ronda';
@@ -7,6 +7,8 @@ interface PedidoDraft {
   participante: string;
   producto: string;
 }
+
+type SortMode = 'recent' | 'time' | 'most-orders';
 
 @Component({
   selector: 'app-ronda-list',
@@ -24,10 +26,72 @@ export class RondaList implements OnInit {
   protected readonly closingId = signal<number | null>(null);
   protected readonly errorMessage = signal('');
 
+  protected readonly searchTerm = signal('');
+  protected readonly sortMode = signal<SortMode>('recent');
+  protected readonly currentPage = signal(1);
+  protected readonly pageSize = 6;
+
+  protected readonly filteredRondas = computed(() => {
+    const term = this.searchTerm().trim().toLowerCase();
+    const base = term
+      ? this.rondas().filter((ronda) => {
+          const haystack = `${ronda.lugar} ${ronda.creador} ${ronda.descripcion}`.toLowerCase();
+          return haystack.includes(term);
+        })
+      : this.rondas();
+
+    const sorted = [...base];
+    switch (this.sortMode()) {
+      case 'time':
+        sorted.sort((a, b) => (a.horaSalida ?? '').localeCompare(b.horaSalida ?? ''));
+        break;
+      case 'most-orders':
+        sorted.sort((a, b) => (b.pedidos?.length ?? 0) - (a.pedidos?.length ?? 0));
+        break;
+      case 'recent':
+      default:
+        sorted.sort((a, b) => (b.id ?? 0) - (a.id ?? 0));
+        break;
+    }
+    return sorted;
+  });
+
+  protected readonly totalPages = computed(() =>
+    Math.max(1, Math.ceil(this.filteredRondas().length / this.pageSize)),
+  );
+
+  protected readonly safePage = computed(() => Math.min(this.currentPage(), this.totalPages()));
+
+  protected readonly pagedRondas = computed(() => {
+    const start = (this.safePage() - 1) * this.pageSize;
+    return this.filteredRondas().slice(start, start + this.pageSize);
+  });
+
   protected drafts: Record<number, PedidoDraft> = {};
 
   ngOnInit(): void {
     this.loadRondas();
+  }
+
+  protected onSearchChange(value: string): void {
+    this.searchTerm.set(value);
+    this.currentPage.set(1);
+  }
+
+  protected onSortChange(value: SortMode): void {
+    this.sortMode.set(value);
+    this.currentPage.set(1);
+  }
+
+  protected clearFilters(): void {
+    this.searchTerm.set('');
+    this.sortMode.set('recent');
+    this.currentPage.set(1);
+  }
+
+  protected goToPage(page: number): void {
+    const clamped = Math.max(1, Math.min(page, this.totalPages()));
+    this.currentPage.set(clamped);
   }
 
   protected toggleForm(rondaId: number): void {

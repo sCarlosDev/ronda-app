@@ -11,6 +11,7 @@
 }
 
 .hero,
+.benefits,
 .how-it-works {
   width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
@@ -76,8 +77,6 @@
 .brand-mark {
   width: 40px;
   height: 40px;
-  color: #ffffff;
-  background: linear-gradient(135deg, #0f766e, #4f46e5);
 }
 
 .status-pill,
@@ -323,6 +322,7 @@ h1 {
 
 @media (max-width: 560px) {
   .hero,
+  .benefits,
   .how-it-works {
     width: min(100% - 24px, 1180px);
   }
@@ -340,4 +340,127 @@ h1 {
   .btn {
     width: 100%;
   }
+}
+
+.benefits {
+  padding: 8px 0 24px;
+}
+
+.benefits-heading {
+  max-width: 640px;
+  margin-bottom: 22px;
+}
+
+.benefits-heading h2 {
+  margin-top: 8px;
+  color: #0f172a;
+  font-size: 2.1rem;
+  line-height: 1.12;
+}
+
+.benefit-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.benefit-card {
+  padding: 22px;
+  border: 1px solid rgba(15, 23, 42, 0.09);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+}
+
+.benefit-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  color: #4f46e5;
+  background: linear-gradient(135deg, rgba(15, 118, 110, 0.12), rgba(79, 70, 229, 0.16));
+}
+
+.benefit-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.benefit-card h3 {
+  color: #0f172a;
+  font-size: 1.1rem;
+}
+
+.benefit-card p {
+  margin-top: 8px;
+  color: #475569;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .benefit-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.btn,
+.benefit-card,
+.steps article {
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 22px 50px rgba(79, 70, 229, 0.32);
+}
+
+.btn-secondary:hover {
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
+}
+
+.benefit-card:hover,
+.steps article:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 46px rgba(15, 23, 42, 0.12);
+}
+
+@keyframes rondaFadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes rondaPopIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-copy,
+  .order-panel,
+  .benefits-heading,
+  .how-it-works > div {
+    animation: rondaFadeUp 520ms ease-out both;
+  }
+
+  .order-panel { animation-delay: 80ms; }
+  .benefits-heading { animation-delay: 160ms; }
+  .how-it-works > div { animation-delay: 240ms; }
+
+  .benefit-card,
+  .steps article {
+    animation: rondaPopIn 520ms ease-out both;
+  }
+
+  .benefit-card:nth-child(1) { animation-delay: 200ms; }
+  .benefit-card:nth-child(2) { animation-delay: 280ms; }
+  .benefit-card:nth-child(3) { animation-delay: 360ms; }
+
+  .steps article:nth-child(1) { animation-delay: 300ms; }
+  .steps article:nth-child(2) { animation-delay: 380ms; }
+  .steps article:nth-child(3) { animation-delay: 460ms; }
 }
