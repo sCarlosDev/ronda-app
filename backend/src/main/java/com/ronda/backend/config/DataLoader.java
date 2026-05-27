@@ -20,7 +20,7 @@ package com.ronda.backend.config;
               Ronda ronda1 = new Ronda(
                       "Prueba",
                       "Cafeteria NTT",
-                      "11:30",
+                      "09:30",
                       "600123123",
                       "Ronda de cafe antes de la reunión"
               );
@@ -30,7 +30,7 @@ package com.ronda.backend.config;
               Ronda ronda2 = new Ronda(
                       "Marta",
                       "Bar de la esquina",
-                      "14:00",
+                      "15:00",
                       "611222333",
                       "Ronda para comer despues de clase"
               );
