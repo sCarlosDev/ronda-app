@@ -64,6 +64,7 @@ Base: `http://localhost:8080/api/rondas`
 
 ## Errores
 - Durante el desarrollo, hemos tenido un conflicto de desincronización en GitHub debido a que el código del Frontend se trabajó en una rama independiente y aislada de la rama principal. Al intentar realizar un git push para subir las modificaciones, el servidor rechazó la operación ya que la rama de destino contenía un historial de confirmaciones que no estaba integrado en nuestra rama local, impidiendo que Git fusionara los cambios de manera directa y automática.
+- Hemos tenido un último error fuera de tiempo que no habíamos comprobado, a veces no dejaba publicar rondas pero era porque no habíamos añadido un mensaje cuando fallaba la validación de datos del formulario, tras revisarlo y corregirlo realizamos el commit.
 
 ## Integrantes
 - Carlos Saelices Pérez
