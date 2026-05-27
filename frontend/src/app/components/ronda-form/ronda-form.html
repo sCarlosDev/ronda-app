@@ -41,22 +41,34 @@
       <label>
         <span>Creador</span>
         <input type="text" formControlName="creador" placeholder="Maria Gonzalez" autocomplete="name" />
+        @if (fieldError('creador')) {
+          <p class="field-error">{{ fieldError('creador') }}</p>
+        }
       </label>
 
       <label>
         <span>Lugar</span>
         <input type="text" formControlName="lugar" placeholder="Cafeteria Genesis" />
+        @if (fieldError('lugar')) {
+          <p class="field-error">{{ fieldError('lugar') }}</p>
+        }
       </label>
 
       <div class="field-grid">
         <label>
           <span>Hora de salida</span>
           <input type="time" formControlName="horaSalida" />
+          @if (fieldError('horaSalida')) {
+            <p class="field-error">{{ fieldError('horaSalida') }}</p>
+          }
         </label>
 
         <label>
           <span>Telefono Bizum</span>
           <input type="tel" formControlName="telefonoBizum" placeholder="600123123" autocomplete="tel" />
+          @if (fieldError('telefonoBizum')) {
+            <p class="field-error">{{ fieldError('telefonoBizum') }}</p>
+          }
         </label>
       </div>
 
@@ -67,6 +79,9 @@
           rows="4"
           placeholder="Bajo a por cafes y algo de desayuno. Cierro pedidos cinco minutos antes."
         ></textarea>
+        @if (fieldError('descripcion')) {
+          <p class="field-error">{{ fieldError('descripcion') }}</p>
+        }
       </label>
 
       @if (errorMessage) {

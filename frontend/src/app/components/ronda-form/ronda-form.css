@@ -175,6 +175,14 @@ textarea:focus {
   box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
 }
 
+.field-error {
+  margin: -2px 0 0;
+  color: #b91c1c;
+  font-size: 0.84rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
 .field-grid {
   gap: 14px;
 }

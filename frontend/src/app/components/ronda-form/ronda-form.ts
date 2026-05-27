@@ -21,9 +21,35 @@ export class RondaForm {
     creador: ['', [Validators.required, Validators.minLength(2)]],
     lugar: ['', [Validators.required, Validators.minLength(2)]],
     horaSalida: ['', Validators.required],
-    telefonoBizum: ['', [Validators.required, Validators.minLength(9)]],
+    telefonoBizum: ['', [Validators.required, Validators.pattern(/^\d{9,}$/)]],
     descripcion: ['', [Validators.required, Validators.maxLength(180)]],
   });
+
+  protected fieldError(fieldName: keyof typeof this.rondaForm.controls): string {
+    const field = this.rondaForm.controls[fieldName];
+
+    if (!field.touched || !field.errors) {
+      return '';
+    }
+
+    if (field.errors['required']) {
+      return 'Este campo es obligatorio.';
+    }
+
+    if (field.errors['minlength']) {
+      return 'Debe tener al menos 2 caracteres.';
+    }
+
+    if (field.errors['pattern']) {
+      return 'El telefono debe tener minimo 9 digitos.';
+    }
+
+    if (field.errors['maxlength']) {
+      return 'La descripcion no puede superar 180 caracteres.';
+    }
+
+    return '';
+  }
 
   protected submit(): void {
     if (this.rondaForm.invalid) {
