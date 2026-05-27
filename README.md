@@ -64,3 +64,9 @@ Base: `http://localhost:8080/api/rondas`
 
 ## Errores
 - Durante el desarrollo, hemos tenido un conflicto de desincronización en GitHub debido a que el código del Frontend se trabajó en una rama independiente y aislada de la rama principal. Al intentar realizar un git push para subir las modificaciones, el servidor rechazó la operación ya que la rama de destino contenía un historial de confirmaciones que no estaba integrado en nuestra rama local, impidiendo que Git fusionara los cambios de manera directa y automática.
+
+## Integrantes
+- Carlos Saelices Pérez
+- Radomyr Moskalenko
+- José Miguel Rubio Alemán
+- David Garcia Danchuk
